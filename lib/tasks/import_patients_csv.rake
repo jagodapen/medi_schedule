@@ -3,15 +3,14 @@ require "csv"
 
 desc "Import patients data from csv file. Add path to file as task call argument. 
 File format requirements: 
-- columns order: first_name, last_name, pesel, city
-- one patient data in one row
-- add headers"
+- add headers: first_name, last_name, pesel, city
+- one patient data in one row"
 
 task import_patients_csv: :environment do
   ARGV.each { |a| task a.to_sym do; end }
 
   # Validate correctness of csv file
-  return "Incorrect use of rake task. Type: rake import_patients_data <csv_file_path>" if ARGV.count != 2
+  return "Incorrect use of rake task. Type: rake import_patients_csv <csv_file_path>" if ARGV.count != 2
   return "Incorrect file path" unless File.exist?(ARGV[1])
   # I would also check if this is csv file and has correct format
 
