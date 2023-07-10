@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_105651) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "currencies", ["PLN", "EUR"]
+  create_enum "genders", ["female", "male", "not_set"]
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "patient_id", null: false
@@ -47,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_105651) do
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "gender"
+    t.enum "gender", enum_type: "genders"
     t.integer "appointments_count"
     t.index ["last_name"], name: "index_patients_on_last_name"
   end
