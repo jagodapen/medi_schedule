@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>Patients</h1>
+</div>
+
+<div class="container">
+  <table class="table table-sm">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Birth Date</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @patients.each do |patient| %>
+        <tr>
+          <td><%= patient.first_name %></td>
+          <td><%= patient.last_name %></td>
+          <td><%= patient.city %></td>
+          <td><%= patient.birth_date %></td>
+          <td><%= patient.gender %></td>
+          <td><button type="button" class="btn btn-light btn-sm">Placeholder</button></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
