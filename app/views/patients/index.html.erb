@@ -3,8 +3,11 @@
 </div>
 
 <div class="container">
-  <table class="table table-sm">
-    <thead class="table-dark">
+  <div class="pag-bar">
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  </div>
+  <table class="table table-sm table-hover">
+    <thead>
       <tr>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
