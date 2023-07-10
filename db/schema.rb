@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_075228) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_10_081113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +19,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_075228) do
     t.string "last_name"
     t.string "pesel"
     t.date "birth_date"
-    t.string "gender"
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "gender"
     t.index ["last_name"], name: "index_patients_on_last_name"
   end
 
