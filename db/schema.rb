@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_081113) do
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "gender"
+    t.string "gender"
     t.index ["last_name"], name: "index_patients_on_last_name"
   end
 
