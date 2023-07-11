@@ -1,5 +1,6 @@
 class PatientsController < ApplicationController
   def index
-    @pagy, @patients = pagy(Patient.all)
+    @q = Patient.ransack(params[:q])
+    @pagy, @patients = pagy(@q.result)
   end
 end
