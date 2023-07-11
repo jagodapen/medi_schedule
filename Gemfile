@@ -75,3 +75,5 @@ group :test do
 end
 
 gem "activerecord-import", require: false
+gem "pagy", "~> 6.0"
+gem "ransack"

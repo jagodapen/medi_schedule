@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>Patients</h1>
+</div>
+
+<div class="container">
+  <div id="filtering">
+    <form class="row gx-3 gy-2 align-items-center"><%= search_form_for @q do |f| %>
+      <div class="col-sm-4">
+        <%= f.label :gender_eq, class: "visually-hidden" %>
+        <div class="input-group">
+          <div class="input-group-text">Gender</div>
+          <%= f.select :gender_eq, options_for_select([["Female", "female"], ["Male", "male"]]), { include_blank: true }, { class: "form-select" } %>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <%= f.label :last_name_cont, class: "visually-hidden" %>
+        <div class="input-group">
+          <div class="input-group-text">Last Name</div>
+          <%= f.search_field :last_name_cont, class: "form-control col" %>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <%= f.submit "Filter", class: "btn btn-primary me-2", type: "submit"%>
+      </div>
+      <% end %>
+    </form>
+  </div>
+  <div class="my-5">
+    <table class="table table-sm table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col"><%= sort_link(@q, :last_name) %></th>
+          <th scope="col">City</th>
+          <th scope="col"><%= sort_link(@q, :birth_date) %></th>
+          <th scope="col">Gender</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @patients.each do |patient| %>
+          <tr>
+            <td><%= patient.first_name %></td>
+            <td><%= patient.last_name %></td>
+            <td><%= patient.city %></td>
+            <td><%= patient.birth_date %></td>
+            <td><%= patient.gender %></td>
+            <td><button type="button" class="btn btn-light btn-sm">Placeholder</button></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="pagination" class="pag-bar">
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+  </div>
+</div>
