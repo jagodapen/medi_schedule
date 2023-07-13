@@ -45,7 +45,7 @@
             <td><%= patient.city %></td>
             <td><%= patient.birth_date %></td>
             <td><%= patient.gender %></td>
-            <td><button type="button" class="btn btn-light btn-sm">Placeholder</button></td>
+            <td><%= link_to "Add Appointment", new_patient_appointment_path(patient), class: "btn btn-primary" %></td>
           </tr>
         <% end %>
       </tbody>
