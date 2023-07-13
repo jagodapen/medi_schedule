@@ -34,7 +34,7 @@
           <th scope="col">City</th>
           <th scope="col"><%= sort_link(@q, :birth_date) %></th>
           <th scope="col">Gender</th>
-          <th scope="col">Action</th>
+          <th colspan="2" scope="col">Appointments</th>
         </tr>
       </thead>
       <tbody>
@@ -45,7 +45,8 @@
             <td><%= patient.city %></td>
             <td><%= patient.birth_date %></td>
             <td><%= patient.gender %></td>
-            <td><%= link_to "Add Appointment", new_patient_appointment_path(patient), class: "btn btn-primary" %></td>
+            <td><%= link_to patient.appointments_count || "0", appointments_patient_path(patient) %></td>
+            <td><%= link_to "Add", new_patient_appointment_path(patient), class: "btn btn-primary" %></td>
           </tr>
         <% end %>
       </tbody>
