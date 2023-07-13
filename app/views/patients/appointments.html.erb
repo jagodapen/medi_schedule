@@ -1,0 +1,7 @@
+<div class="container">
+  <h1>Patient appointmnets</h1>
+  <div>
+    <%= link_to "Add", new_patient_appointment_path(patient_id: params[:id]), class: "btn btn-primary" %>
+  </div>
+</div>
+<%= render 'appointments/index_table', q: @q, pagy: @pagy, appointments: @appointments %>
