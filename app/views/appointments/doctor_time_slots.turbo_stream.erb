@@ -1,0 +1,16 @@
+<%= turbo_stream.replace @target do %>
+  <div id="time-slots-container" data-appointments-target="timeslots" class="my-4">
+    <% @time_slots&.each do |day, day_time_slots| %>
+      <div class="fst-normal text-center mb-2"><%= day %></div>
+      <div class="d-flex flex-wrap py-4"><% day_time_slots.each do |time_slot, available| %>
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn mx-2 my-1 <%= available ? "btn-outline-primary" : "btn-secondary" %>" >
+            <%= radio_button_tag :start_time, time_slot.to_s, !available, disabled: !available %>
+            <%= time_slot.strftime('%H:%M') %>
+          </label>
+        </div>
+      <% end%>
+      </div>
+    <% end%>
+  </div>
+<% end %>
