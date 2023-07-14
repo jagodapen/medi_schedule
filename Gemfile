@@ -77,3 +77,5 @@ end
 gem "activerecord-import", require: false
 gem "pagy", "~> 6.0"
 gem "ransack"
+gem "chartkick", "~> 5.0"
+gem "groupdate", "~> 6.3"
