@@ -2,6 +2,7 @@ class PatientsController < ApplicationController
   def index
     @q = Patient.ransack(params[:q])
     @pagy, @patients = pagy(@q.result)
+    @birth_date_statistics = Patient.group_by_year(:birth_date, format: "%Y").count
   end
 
   def appointments
@@ -10,6 +11,6 @@ class PatientsController < ApplicationController
   end
 
   def birth_date_statistics
-
+    @birth_date_statistics = Patient.group_by_year(:birth_date, format: "%Y").count
   end
 end

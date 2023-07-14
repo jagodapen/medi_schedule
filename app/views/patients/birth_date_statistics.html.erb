@@ -1,4 +1,3 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-<div class="text-center">Patients birth dates statistics</div>
 
-<%= column_chart Patient.group_by_year(:birth_date, format: "%Y").count, height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %>
+<%= column_chart @birth_date_statistics, height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %>
