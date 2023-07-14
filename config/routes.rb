@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     member do
       get "appointments"
     end
+    collection do
+      get "birth_date_statistics"
+    end
   end
   resources :appointments, only: [:index, :create, :destroy] do
     collection do
