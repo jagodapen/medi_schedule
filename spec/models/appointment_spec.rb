@@ -9,6 +9,21 @@ RSpec.describe Appointment, type: :model do
   it { should validate_uniqueness_of(:start_time).scoped_to(:doctor_id) }
   it { should validate_presence_of :doctor_id }
   it { should validate_presence_of :patient_id }
+  
+  describe ".incoming" do
+    let(:incoming_date) { Date.today.to_datetime.in_time_zone("Europe/Warsaw").next_week.change(hour: 8, min: 0) }
+    let(:incoming_appointment) { create :appointment, start_time: incoming_date }
+    let(:past_date) { Date.yesterday.to_datetime.in_time_zone("Europe/Warsaw").change(hour: 8, min: 0) }
+    let(:past_appointment) { create :appointment, :skip_validation, start_time: past_date }
+
+    it "includes incoming appointments" do
+      expect(Appointment.incoming).to include(incoming_appointment)
+    end
+
+    it "not includes past appointments" do
+      expect(Appointment.incoming).not_to include(past_appointment)
+    end
+  end
 
   describe "before_save validation" do
     context "valid appointment date" do
@@ -18,6 +33,7 @@ RSpec.describe Appointment, type: :model do
         expect { appointment.save }.to change(Appointment, :count).by(1)
       end
     end
+    
     context "invalid appointment date" do
       let(:appointment) { build :appointment, start_time: start_time }
 

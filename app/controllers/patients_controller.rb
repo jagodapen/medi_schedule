@@ -8,6 +8,7 @@ class PatientsController < ApplicationController
   def appointments
     @q = Appointment.ransack(params[:q])
     @pagy, @appointments = pagy(@q.result.includes(:doctor, :patient).where(patient_id: params[:id]))
+    @incoming = Appointment.incoming
   end
 
   def birth_date_statistics

@@ -4,6 +4,7 @@ class AppointmentsController < ApplicationController
   def index
     @q = Appointment.ransack(params[:q])
     @pagy, @appointments = pagy(@q.result.includes(:doctor, :patient))
+    @incoming = Appointment.incoming
   end
 
   def new

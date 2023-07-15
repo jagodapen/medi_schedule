@@ -15,6 +15,8 @@ class Appointment < ApplicationRecord
   validates_presence_of :patient_id, :doctor_id
   validate :validate_datetime
 
+  scope :incoming, -> { where("start_time > ?", Time.zone.now) }
+
   def self.ransackable_attributes(auth_object = nil)
     ["patient_id", "doctor_id"]
   end
