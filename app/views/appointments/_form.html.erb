@@ -8,7 +8,7 @@
         <div class="input-group w-100">
           <div class="input-group-text">Doctor</div>
           <%= f.select :doctor_id, 
-            options_from_collection_for_select(@doctors, :id, "full_name_with_faculty"),
+            options_from_collection_for_select(@doctors, :id, :full_name_with_faculty),
             { class: "form-select", include_blank: true },
             { 
               class: "form-select",
@@ -25,7 +25,7 @@
         <%= f.label :duration, class: "visually-hidden" %>
         <div class="input-group">
           <div class="input-group-text">Duration</div>
-          <%= f.number_field :duration, 
+          <%= f.number_field :duration,
             { class: "form-control disabled text-end",
               value: 20,
               disabled: true }

@@ -4,21 +4,18 @@ class AppointmentsController < ApplicationController
   def index
     @q = Appointment.ransack(params[:q])
     @pagy, @appointments = pagy(@q.result.includes(:doctor, :patient))
-  end
-
-  def show
-    @appointment = Appointment.find(params[:id])
+    @incoming = Appointment.incoming
   end
 
   def new
     @appointment = Appointment.new(patient_id: params[:patient_id])
     @doctors = Doctor.all
-    @time_slots = week_time_slots(Date.today)
+    @time_slots = {}
   end
 
   def create
-    @doctors = Doctor.all
     @appointment = Appointment.create(appointment_params)
+    @doctors = Doctor.all
     
     if @appointment.errors.empty?
       redirect_to  appointments_patient_url(params.dig(:appointment, :patient_id)), notice: "Appointment was successfully created."
@@ -34,8 +31,9 @@ class AppointmentsController < ApplicationController
   end
 
   def doctor_time_slots
-    doctor_id = params[:doctor_id]
-    @time_slots = Appointments::Data::DoctorsAvailableTimeSlots.new(doctor_id: doctor_id).for_next_week
+    @time_slots = Appointments::Data::DoctorsAvailableTimeSlots
+                    .new(doctor_id: params[:doctor_id])
+                    .for_next_week
     @target = params[:target]
 
     respond_to do |format|
@@ -55,11 +53,5 @@ class AppointmentsController < ApplicationController
       currency: Appointment::DEFAULT_CURRENCY,
       duration: Appointment::DEFAULT_DURATION,
     })
-  end
-
-  def week_time_slots(start_day)
-    @week_time_slots = (start_day...(start_day + 7.days)).each_with_object({}) do |day, obj|
-      obj[day.to_date] = Appointments::Data::TimeSlots.new(day: day.to_date).find_for(minutes: 20)
-    end
   end
 end

@@ -27,7 +27,11 @@ module Appointments
 
       def week_time_slots
         @week_time_slots = week.each_with_object({}) do |day, obj|
-          obj[day.to_date] = Appointments::Data::TimeSlots.new(day: day.to_date).find_for(minutes: 20)
+          next unless day.to_date.on_weekday?
+
+          obj[day.to_date] = Appointments::Data::TimeSlots
+                              .new(day: day.to_date)
+                              .find_for(minutes: Appointment::DEFAULT_DURATION)
         end
       end
 

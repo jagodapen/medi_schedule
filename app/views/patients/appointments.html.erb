@@ -4,4 +4,4 @@
     <%= link_to "Add", new_patient_appointment_path(patient_id: params[:id]), class: "btn btn-primary" %>
   </div>
 </div>
-<%= render 'appointments/index_table', q: @q, pagy: @pagy, appointments: @appointments %>
+<%= render 'appointments/index_table', q: @q, pagy: @pagy, appointments: @appointments, incoming: @incoming %>

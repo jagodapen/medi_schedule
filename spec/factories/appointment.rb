@@ -6,5 +6,9 @@ FactoryBot.define do
     duration  { 20 }
     cost { 100 }
     currency { "PLN" }
+
+    trait :skip_validation do
+      to_create {|instance| instance.save(validate: false) }
+    end
   end
 end

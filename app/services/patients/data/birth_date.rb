@@ -1,15 +1,13 @@
 module Patients
   module Data
     class BirthDate
-      InvalidPesel = Class.new(StandardError)
-
       class << self
+        # Assume the pesel is valid, to validate pesel call Patients::Validators::Pesel service
         def find(pesel:)
-          @pesel = pesel
+          return nil unless pesel
 
-          year + "-#{month}-" + day
-        rescue Date::Error => e
-          raise InvalidPesel, "Pesel does not match expected format: #{e}"
+          @pesel = pesel.to_s
+          return year + "-#{month}-" + day
         end
 
         private
@@ -17,7 +15,8 @@ module Patients
         def century
           return "19" if @pesel[2].in?(%w(0 1))
           return "20" if @pesel[2].in?(%w(2 3))
-          return "18" if @pesel[2].in?(%w(8 9))
+
+          "18"
         end
 
         def year

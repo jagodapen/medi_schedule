@@ -17,11 +17,13 @@
           <tr>
             <td><%= appointment.doctor.full_name %></td>
             <td><%= appointment.patient.full_name %></td>
-            <td><%= appointment.start_time.strftime("%d %B, %Y") %></td>
-            <td><%= appointment.start_time.strftime("%k:%M") %></td>
+            <td><%= appointment.start_time.in_time_zone("Europe/Warsaw").strftime("%d %B, %Y") %></td>
+            <td><%= appointment.start_time.in_time_zone("Europe/Warsaw").strftime("%k:%M") %></td>
             <td><%= appointment.cost %></td>
             <td><%= appointment.currency %></td>
-            <td><%= link_to 'Delete', appointment_path(appointment), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
+            <% if appointment.in?(incoming) %>
+              <td><%= link_to 'Delete', appointment_path(appointment), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
