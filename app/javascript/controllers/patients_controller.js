@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "popup" ]
+  static targets = [ "popup", "button" ]
   static values = { isOpen: { type: Boolean, default: false } }
 
   statistics() {
@@ -11,9 +11,11 @@ export default class extends Controller {
 
   show() {
     this.popupTarget.classList = "visible"
+    this.buttonTarget.innerHTML = "Close statistics"
   }
 
   hide() {
     this.popupTarget.classList = "visually-hidden"
+    this.buttonTarget.innerHTML = "See birth year statistics"
   }
 }

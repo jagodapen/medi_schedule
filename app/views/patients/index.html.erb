@@ -1,7 +1,9 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 <div class="container my-4" data-controller="patients">
   <div class="fs-5">Patients</div>
-  <button type="button" class="btn btn-sm btn-info" data-action="click->patients#statistics">See birth year statistics</button>
+  <button type="button" class="btn btn-sm btn-info" data-action="click->patients#statistics" data-patients-target="button">
+    See birth year statistics
+  </button>
   <div data-patients-target="popup" class="visually-hidden">
     <div><%= column_chart @birth_date_statistics, width: "90vw", height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %></div>
   </div>

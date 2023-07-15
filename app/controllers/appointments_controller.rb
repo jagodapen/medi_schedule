@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.create(appointment_params)
     
     if @appointment.errors.empty?
-      redirect_to appointments_url, notice: "Appointment was successfully created."
+      redirect_to  appointments_patient_url(params.dig(:appointment, :patient_id)), notice: "Appointment was successfully created."
     else
       render :new, status: :unprocessable_entity, alert: @appointment.errors.messages
     end

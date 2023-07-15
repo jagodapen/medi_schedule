@@ -1,7 +1,9 @@
-<% if obj.errors.any? %>
-  <% obj.errors.full_messages.each do |message| %>
-    <p class="alert alert alert-danger mx-5 mt-2">
-      <%= message %>
-    </p>
+<div class="container my-4">
+  <% if obj.errors.any? %>
+    <% obj.errors.full_messages.each do |message| %>
+      <p class="alert alert alert-danger mx-5 mt-2">
+        <%= message %>
+      </p>
+    <% end %>
   <% end %>
-<% end %>
+</div>

@@ -1,0 +1,12 @@
+<div class="container my-4">
+  <% if notice %>
+    <p class="notice alert alert-success">
+      <%= flash.now[:notice] %>
+    </p>
+  <% end %>
+  <% if alert %>
+    <p class="notice alert alert-success">
+      <%= flash.now[:alert] %>
+    </p>
+  <% end %>
+</div>
