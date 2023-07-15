@@ -6,6 +6,8 @@ class Appointment < ApplicationRecord
   DEFAULT_START_TIME = 8.freeze
   DEFAULT_END_TIME = 16.freeze
 
+  enum currency: { pln: "PLN", eur: "EUR" }
+
   belongs_to :patient, counter_cache: true
   belongs_to :doctor
 
