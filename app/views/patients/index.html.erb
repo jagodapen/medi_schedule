@@ -1,25 +1,32 @@
-<div class="container">
-  <h1>Patients</h1>
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<div class="container my-4" data-controller="patients">
+  <div class="fs-5">Patients</div>
+  <button type="button" class="btn btn-sm btn-info" data-action="click->patients#statistics" data-patients-target="button">
+    See birth year statistics
+  </button>
+  <div data-patients-target="popup" class="visually-hidden">
+    <div><%= column_chart @birth_date_statistics, width: "90vw", height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %></div>
+  </div>
 </div>
 
 <div class="container">
   <div id="filtering">
-    <form class="row gx-3 gy-2 align-items-center"><%= search_form_for @q do |f| %>
-      <div class="col-sm-4">
+    <form class="row gx-3 gy-2"><%= search_form_for @q do |f| %>
+      <div class="col-4">
         <%= f.label :gender_eq, class: "visually-hidden" %>
         <div class="input-group">
           <div class="input-group-text">Gender</div>
           <%= f.select :gender_eq, options_for_select([["Female", "female"], ["Male", "male"]]), { include_blank: true }, { class: "form-select" } %>
         </div>
       </div>
-      <div class="col-sm-5">
+      <div class="col-5">
         <%= f.label :last_name_cont, class: "visually-hidden" %>
         <div class="input-group">
           <div class="input-group-text">Last Name</div>
           <%= f.search_field :last_name_cont, class: "form-control col" %>
         </div>
       </div>
-      <div class="col-sm-2">
+      <div class="col-2 text-end">
         <%= f.submit "Filter", class: "btn btn-primary me-2", type: "submit"%>
       </div>
       <% end %>
