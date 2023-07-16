@@ -1,62 +1,66 @@
-<div class="bg-light mx-5" id="form-container" data-controller="appointments">
-  <%= form_for @appointment do |f| %>
+<%= form_for @appointment do |f| %>
+  <div class="bg-light mx-5 row" id="form-container" data-controller="appointments">
     <%= f.hidden_field :patient_id, value: @appointment.patient_id %>
-  <%# Doctor and datetime %>
-    <div class="row m-2 mt-4">
-      <div class="col-8 col-sm-6">
-        <%= f.label :doctor_id, class: "visually-hidden" %>
-        <div class="input-group w-100">
-          <div class="input-group-text">Doctor</div>
-          <%= f.select :doctor_id, 
-            options_from_collection_for_select(@doctors, :id, :full_name_with_faculty),
-            { class: "form-select", include_blank: true },
-            { 
-              class: "form-select",
-              id: "select-doctor", 
-              data: { 
-                appointments_target: "doctor",
-                action: "change->appointments#doctorChange"
+    <div class="col-5" id="settings-panel">
+      <div class="m-2 mt-4">
+        <%# Doctor %>
+        <div class="m-2">
+          <%= f.label :doctor_id, class: "visually-hidden" %>
+          <div class="input-group w-100">
+            <div class="input-group-text">Doctor</div>
+            <%= f.select :doctor_id, 
+              options_from_collection_for_select(@doctors, :id, :full_name_with_faculty),
+              { class: "form-select", include_blank: true },
+              { 
+                class: "form-select",
+                id: "select-doctor", 
+                data: { 
+                  appointments_target: "doctor",
+                  action: "change->appointments#doctorChange"
+                } 
               } 
-            } 
-          %>
+            %>
+          </div>
         </div>
-      </div>
-      <div class="col-4 col-sm-6">
-        <%= f.label :duration, class: "visually-hidden" %>
-        <div class="input-group">
-          <div class="input-group-text">Duration</div>
-          <%= f.number_field :duration,
-            { class: "form-control disabled text-end",
-              value: 20,
-              disabled: true }
-          %>
-          <div class="input-group-text">minutes</div>
-        </div>
-      </div>
-    </div>
-
-    <%# Cost and currency %>
-    <div class="row m-2 py-4">
-      <div class="col-4 col-sm-8 row">
-        <%= f.label :cost, class: "visually-hidden" %>
-        <div class="input-group">
-          <div class="input-group-text col w-25">Cost</div>
-          <%= f.number_field :cost, class: "form-control col-6 w-50" %>
-          <%= f.label :currency, class: "visually-hidden" %>
-          <%= f.text_field :currency, 
-              { class: "form-control disabled text-end col w-25",
-                value: "pln",
+        <%# Datetime %>
+        <div class="m-2">
+          <%= f.label :duration, class: "visually-hidden" %>
+          <div class="input-group">
+            <div class="input-group-text">Duration</div>
+            <%= f.number_field :duration,
+              { class: "form-control disabled text-end",
+                value: 20,
                 disabled: true }
-          %>
+            %>
+            <div class="input-group-text">minutes</div>
+          </div>
+        </div>
+        <%# Cost and currency %>
+        <div class="m-2">
+          <div>
+            <%= f.label :cost, class: "visually-hidden" %>
+            <div class="input-group">
+              <div class="input-group-text">Cost</div>
+              <%= f.number_field :cost, class: "form-control col-6 w-50" %>
+              <%= f.label :currency, class: "visually-hidden" %>
+              <%= f.text_field :currency, 
+                  { class: "form-control disabled text-end col w-25",
+                    value: "pln",
+                    disabled: true }
+              %>
+            </div>
+          </div>
+        </div>
+        <%# Submit button %>
+        <div class="m-2">
+          <%= f.submit 'Create', class: 'btn btn-primary' %>
         </div>
       </div>
     </div>
+    
     <%# Timeslots %>
-    <div id="time-slots-container" data-appointments-target="timeslots"></div>
-
-
-    <div class="ps-4 pb-4">
-      <%= f.submit 'Create', class: 'btn btn-primary' %>
+    <div class="col-7" id="timeslots-panel">
+      <div id="time-slots-container" data-appointments-target="timeslots"></div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

@@ -5,3 +5,12 @@
 .pagination .active .page-link {
   color: #000000;
 }
+
+#time-slots-container {
+  height: calc( 80vh );
+}
+
+#timeslots-list {
+  height: calc( 80vh - 100px);
+  overflow-y: scroll;
+}

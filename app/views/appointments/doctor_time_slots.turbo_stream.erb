@@ -1,16 +1,37 @@
 <%= turbo_stream.replace @target do %>
-  <div id="time-slots-container" data-appointments-target="timeslots" class="my-4">
-    <% @time_slots&.each do |day, day_time_slots| %>
-      <div class="fst-normal text-center mb-2"><%= day %></div>
-      <div class="d-flex flex-wrap py-4"><% day_time_slots.each do |time_slot, available| %>
-        <div class="btn-group" data-toggle="buttons">
-          <label class="btn mx-2 my-1 <%= available ? "btn-outline-primary" : "btn-secondary" %>" >
-            <%= radio_button_tag :start_time, time_slot.to_s, !available, disabled: !available %>
-            <%= time_slot.strftime('%H:%M') %>
-          </label>
-        </div>
-      <% end%>
+
+  <div id="time-slots-container" data-appointments-target="timeslots" class="container position-relative">
+  
+    <nav id="timeslots-nav" class="navbar navbar-light bg-light px-3">
+      <ul class="nav nav-pills">
+        <% @time_slots&.each do |day, _| %>
+          <li class="nav-item">
+            <a class="nav-link" href="#timeslots<%= day.to_s.gsub(/-/, "") %>"><%= day %></a>
+          </li>
+        <% end%>
+      </ul>
+    </nav>
+
+    <div id="timeslots-list" data-bs-spy="scroll" data-bs-target="#timeslots-nav" data-bs-offset="0" class="wrapper" tabindex="0">
+      <div>
+        <% @time_slots&.each do |day, day_time_slots| %>
+          <div id="timeslots<%= day.to_s.gsub(/-/, "") %>" class="text-center">
+            <%= day %>
+          </div>
+          <div class="d-flex flex-wrap py-4">
+            <% day_time_slots.each do |time_slot, available| %>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn mx-2 my-1 <%= available ? "btn-outline-primary" : "btn-secondary" %>" >
+                  <%= radio_button_tag :start_time, time_slot.to_s, !available, disabled: !available %>
+                  <%= time_slot.strftime('%H:%M') %>
+                </label>
+              </div>
+            <% end%>
+          </div>
+        <% end%>
       </div>
-    <% end%>
+      <div class="mb-10"></div>
+    </div>
   </div>
+  
 <% end %>
