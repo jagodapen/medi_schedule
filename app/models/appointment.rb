@@ -11,7 +11,8 @@ class Appointment < ApplicationRecord
   belongs_to :patient, counter_cache: true
   belongs_to :doctor
 
-  validates_uniqueness_of :start_time, scope: :doctor_id
+  validates_uniqueness_of :start_time, scope: :doctor_id, message: "Doctor already has an appointment at this time"
+  validates_uniqueness_of :start_time, scope: :patient_id, message: "Patient already has an appointment at this time"
   validates_presence_of :patient_id, :doctor_id
   validate :validate_datetime
 
