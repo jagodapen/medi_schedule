@@ -49,7 +49,7 @@ class AppointmentsController < ApplicationController
     .permit(:doctor_id, :patient_id, :start_time, :cost, :duration)
     .to_h
     .merge({ 
-      start_time: params[:start_time].to_datetime.in_time_zone("Europe/Warsaw"),
+      start_time: params[:start_time]&.to_datetime&.in_time_zone("Europe/Warsaw"),
       currency: Appointment::DEFAULT_CURRENCY,
       duration: Appointment::DEFAULT_DURATION,
     })

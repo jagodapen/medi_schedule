@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "patients#index"
+  root "home#welcome"
   resources :patients, only: [:index] do
     resources :appointments, only: [:new]
     member do

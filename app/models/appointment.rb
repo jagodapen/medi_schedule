@@ -19,15 +19,15 @@ class Appointment < ApplicationRecord
   scope :incoming, -> { where("start_time > ?", Time.zone.now) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["patient_id", "doctor_id"]
+    ["patient_id", "doctor_id", "start_time"]
   end
 
   private
 
   def validate_datetime
-    Appointments::Validators::Date.new(day: start_time).call
-
-  rescue  Appointments::Validators::Date::InvalidDate => e
-    errors.add(:start_time, message: e)
+    validation_errors = Appointments::Validators::Date.new(day: start_time).call
+    unless validation_errors.empty?
+      errors.add(:start_time, validation_errors.first)
+    end
   end
 end

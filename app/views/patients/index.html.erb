@@ -1,65 +1,75 @@
 <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-<div class="container my-4" data-controller="patients">
-  <div class="fs-5">Patients</div>
-  <button type="button" class="btn btn-sm btn-info" data-action="click->patients#statistics" data-patients-target="button">
-    See birth year statistics
-  </button>
-  <div data-patients-target="popup" class="visually-hidden">
-    <div><%= column_chart @birth_date_statistics, width: "90vw", height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %></div>
+<div class="container" data-controller="patients">
+<%# Title %>
+  <div class="m-2">
+    <h4>Patients</h4>
   </div>
-</div>
-
-<div class="container">
-  <div id="filtering">
-    <form class="row gx-3 gy-2"><%= search_form_for @q do |f| %>
-      <div class="col-4">
-        <%= f.label :gender_eq, class: "visually-hidden" %>
-        <div class="input-group">
-          <div class="input-group-text">Gender</div>
-          <%= f.select :gender_eq, options_for_select([["Female", "female"], ["Male", "male"]]), { include_blank: true }, { class: "form-select" } %>
-        </div>
-      </div>
-      <div class="col-5">
-        <%= f.label :last_name_cont, class: "visually-hidden" %>
-        <div class="input-group">
-          <div class="input-group-text">Last Name</div>
-          <%= f.search_field :last_name_cont, class: "form-control col" %>
-        </div>
-      </div>
-      <div class="col-2 text-end">
-        <%= f.submit "Filter", class: "btn btn-primary me-2", type: "submit"%>
-      </div>
-      <% end %>
-    </form>
+  <%# Statistics button %>
+  <div class="m-2 mb-5">
+    <button type="button" class="btn btn-sm btn-info" data-action="click->patients#statistics" data-patients-target="button">
+      See birth year statistics
+    </button>
+    <div data-patients-target="popup" class="visually-hidden">
+      <div><%= column_chart @birth_date_statistics, width: "70vw", height: "500px", ytitle: "Number of Patients", xtitle: "Birth Year" %></div>
+    </div>
   </div>
-  <div class="my-5">
-    <table class="table table-sm table-hover">
-      <thead>
-        <tr>
-          <th scope="col">First Name</th>
-          <th scope="col"><%= sort_link(@q, :last_name) %></th>
-          <th scope="col">City</th>
-          <th scope="col"><%= sort_link(@q, :birth_date) %></th>
-          <th scope="col">Gender</th>
-          <th colspan="2" scope="col">Appointments</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @patients.each do |patient| %>
-          <tr>
-            <td><%= patient.first_name %></td>
-            <td><%= patient.last_name %></td>
-            <td><%= patient.city %></td>
-            <td><%= patient.birth_date %></td>
-            <td><%= patient.gender %></td>
-            <td><%= link_to patient.appointments_count || "0", appointments_patient_path(patient) %></td>
-            <td><%= link_to "Add", new_patient_appointment_path(patient), class: "btn btn-primary" %></td>
-          </tr>
+  <%# Filtering %>
+  <div class="m-2">
+    <div id="filtering">
+      <form class="row gx-3 gy-2"><%= search_form_for @q do |f| %>
+        <div class="col-4">
+          <%= f.label :gender_eq, class: "visually-hidden" %>
+          <div class="input-group">
+            <div class="input-group-text">Gender</div>
+            <%= f.select :gender_eq, options_for_select([["Female", "female"], ["Male", "male"]]), { include_blank: true }, { class: "form-select" } %>
+          </div>
+        </div>
+        <div class="col-5">
+          <%= f.label :last_name_cont, class: "visually-hidden" %>
+          <div class="input-group">
+            <div class="input-group-text">Last Name</div>
+            <%= f.search_field :last_name_cont, class: "form-control col" %>
+          </div>
+        </div>
+        <div class="col-2 text-end">
+          <%= f.submit "Filter", class: "btn btn-primary me-2", type: "submit"%>
+        </div>
         <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div id="pagination" class="pag-bar">
-    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+      </form>
+    </div>
+    <%# Table %>
+    <div class="my-5">
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col"><%= sort_link(@q, :last_name) %></th>
+            <th scope="col">City</th>
+            <th scope="col"><%= sort_link(@q, :birth_date) %></th>
+            <th scope="col">Gender</th>
+            <th scope="col">Appointments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @patients.each do |patient| %>
+            <tr>
+              <td><%= patient.first_name %></td>
+              <td><%= patient.last_name %></td>
+              <td><%= patient.city %></td>
+              <td><%= patient.birth_date %></td>
+              <td><%= patient.gender %></td>
+              <td>
+                <%= link_to patient.appointments_count || "0", appointments_patient_path(patient), class: "mx-3" %>
+                <%= link_to "Add", new_patient_appointment_path(patient), class: "btn btn-sm btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%# Pagination %>
+    <div id="pagination" class="pag-bar">
+      <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+    </div>
   </div>
 </div>

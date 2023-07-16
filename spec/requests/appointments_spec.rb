@@ -46,7 +46,7 @@ RSpec.describe "Appointments", type: :request do
     context "invalid params" do
       let(:start_time) { Date.yesterday.to_datetime.in_time_zone("Europe/Warsaw").change(hour: 8, min: 0) }
       
-      it "returns http success" do
+      it "returns http unprocessable_entity" do
         post "/appointments", params: params
         expect(response).to have_http_status(:unprocessable_entity)
       end
