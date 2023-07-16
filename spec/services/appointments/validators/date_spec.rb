@@ -7,8 +7,9 @@ RSpec.describe Appointments::Validators::Date do
     context "valid appointment date" do
       let(:start_time) { DateTime.now.next_week.change(hour: Appointment::DEFAULT_START_TIME) }
 
-      it "returns true" do
-        expect(subject.call).to be_truthy
+      it "returns empty array" do
+        expect(subject.call).to be_a Array
+        expect(subject.call).to be_empty
       end
     end
 
@@ -16,24 +17,25 @@ RSpec.describe Appointments::Validators::Date do
       context "date in past" do
         let(:start_time) { DateTime.now.change(hour: Appointment::DEFAULT_START_TIME).last_weekday }
 
-        it "raises error" do
-          expect { subject.call }.to raise_error(Appointments::Validators::Date::InvalidDate)
+        it "returns array with errors" do
+          expect(subject.call).to include("Select future date")
         end
       end
 
       context "weekend day" do
         let(:start_time) { DateTime.now.change(hour: Appointment::DEFAULT_START_TIME).beginning_of_week + 6.days }
 
-        it "raises error" do
-          expect { subject.call }.to raise_error(Appointments::Validators::Date::InvalidDate)
+        it "returns array with errors" do
+          expect(subject.call).to include("Meeting can't be scheduled on weekend day")
         end
       end
 
       context "hour out of range" do
         let(:start_time) { DateTime.now.next_week.change(hour: Appointment::DEFAULT_END_TIME) }
 
-        it "raises error" do
-          expect { subject.call }.to raise_error(Appointments::Validators::Date::InvalidDate)
+        it "returns array with errors" do
+          expect(subject.call)
+            .to include("Meeting time has to be set between #{Appointment::DEFAULT_START_TIME} and #{Appointment::DEFAULT_END_TIME}")
         end
       end
     end
