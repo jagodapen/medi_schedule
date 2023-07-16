@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Patient, type: :model do
-  it { should have_many(:appointments) }
+  it { should have_many(:appointments).dependent(:destroy) }
   
   it { should validate_uniqueness_of :pesel }
   it { should validate_presence_of :first_name }
