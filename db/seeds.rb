@@ -30,7 +30,7 @@ Patient.create(first_name: "JULIA", last_name: "STEPANIUK", pesel: "79100956548"
 Appointment.destroy_all
 # Create appointments
 50.times do
-  Appointments.create(
+  Appointment.create(
     patient_id: Patient.all.sample.id,
     doctor_id: Doctor.all.sample.id,
     start_time: DateTime.now.next_week.in_time_zone("Europe/Warsaw").change(hour: rand(8..15), min: [0, 20, 40].sample) + rand(0..4).days,
