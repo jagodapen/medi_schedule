@@ -19,7 +19,7 @@ RSpec.describe Patients::Validators::Pesel do
         let(:month) { "42" }
 
         it "returns error" do
-          expect { subject.call }.to raise_error(Patients::Validators::Pesel::InvalidPesel)
+          expect(subject.call).to include("Pesel does not match expected format")
         end
       end
 
@@ -27,7 +27,7 @@ RSpec.describe Patients::Validators::Pesel do
         let(:month) { "15" }
 
         it "returns error" do
-          expect { subject.call }.to raise_error(Patients::Validators::Pesel::InvalidPesel)
+          expect(subject.call).to include("Pesel does not match expected format")
         end
       end
 
@@ -36,7 +36,7 @@ RSpec.describe Patients::Validators::Pesel do
         let(:day) { "30" }
 
         it "returns error" do
-          expect { subject.call }.to raise_error(Patients::Validators::Pesel::InvalidPesel)
+          expect(subject.call).to include("Pesel does not match expected format")
         end
       end
 
@@ -44,7 +44,7 @@ RSpec.describe Patients::Validators::Pesel do
         let(:day) { "45" }
 
         it "returns error" do
-          expect { subject.call }.to raise_error(Patients::Validators::Pesel::InvalidPesel)
+          expect(subject.call).to include("Pesel does not match expected format")
         end
       end
 
@@ -52,7 +52,7 @@ RSpec.describe Patients::Validators::Pesel do
         let(:month) { "88" }
 
         it "returns error" do
-          expect { subject.call }.to raise_error(Patients::Validators::Pesel::IncrediblyOld)
+          expect(subject.call).to include("No way! Too old")
         end
       end
     end

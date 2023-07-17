@@ -11,13 +11,15 @@ module Patients
         @month_second_digit = pesel[3].to_i
         @day_first_digit = pesel[4].to_i
         @day_second_digit = pesel[5].to_i
+
+        @errors = []
       end
 
       def call
-        raise IncrediblyOld, "No way! Too old." if born_in_19th_century
-        raise InvalidPesel, "Pesel does not match expected format" if invalid_pesel
+        @errors.push("No way! Too old") if born_in_19th_century
+        @errors.push("Pesel does not match expected format") if invalid_pesel
         
-        return true
+        return @errors
       end
 
       private

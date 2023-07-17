@@ -16,21 +16,13 @@ task import_patients_csv: :environment do
 
   # Prepare array with hashed patients params
   patients = []
-  counter = 2
 
   CSV.foreach(ARGV[1], headers: true) do |row|
     data = row.to_h
-    Patients::Validators::Pesel.new(pesel: data["pesel"]).call
     birth_date = Patients::Data::BirthDate.find(pesel: data["pesel"])
     gender = Patients::Data::Gender.find(pesel: data["pesel"])
     patient_data = data.merge({"birth_date": birth_date, "gender": gender})
     patients << patient_data
-    counter += 1
-  rescue  Patients::Validators::Pesel::InvalidPesel, 
-          Patients::Validators::Pesel::IncrediblyOld => e
-    puts "Skipped row #{counter}: #{e}"
-    counter += 1
-    next
   end
 
   # Save patients in database

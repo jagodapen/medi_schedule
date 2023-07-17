@@ -51,7 +51,7 @@ RSpec.describe Appointment, type: :model do
       context "date in past" do
         let(:start_time) { DateTime.now.change(hour: Appointment::DEFAULT_START_TIME).last_weekday.in_time_zone("Europe/Warsaw") }
 
-        it "do not save appointment" do
+        it "does not save appointment" do
           expect { appointment.save }.not_to change(Appointment, :count)
         end
       end
@@ -59,7 +59,7 @@ RSpec.describe Appointment, type: :model do
       context "weekend day" do
         let(:start_time) { (DateTime.now.beginning_of_week + 6.days).in_time_zone("Europe/Warsaw").change(hour: Appointment::DEFAULT_START_TIME) }
 
-        it "raises error" do
+        it "does not save appointment" do
           expect { appointment.save }.not_to change(Appointment, :count)
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe Appointment, type: :model do
       context "hour out of range" do
         let(:start_time) { DateTime.now.next_week.in_time_zone("Europe/Warsaw").change(hour: Appointment::DEFAULT_END_TIME) }
 
-        it "raises error" do
+        it "does not save appointment" do
           expect { appointment.save }.not_to change(Appointment, :count)
         end
       end
